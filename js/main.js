@@ -2,35 +2,57 @@ function monthlyExpense() {
     const incomeInput = document.getElementById('income-input');
     const incomeAmount = parseFloat(incomeInput.value)
     console.log(incomeAmount)
+    const errorMessage = document.getElementById('error-message');
+    if (isNaN(incomeAmount) || incomeAmount <= 0) {
+        errorMessage.style.display = 'block';
+    } else {
+        errorMessage.style.display = 'none';
+    }
 
     const balance = document.getElementById('balance');
     balance.innerText = incomeAmount;
 
-    /* //saving
-    const savingInput = document.getElementById('saving-input');
-    const saveInputPercent = parseFloat(savingInput.value);
-    // console.log(saveInputAmount);
-    const save = incomeAmount / parseFloat(10);
-    const savingAmount = document.getElementById('saving-amount');
-    savingAmount.innerText = save
- */
-
-
-    calculateExpense();
-
-}
-function calculateExpense() {
     const foodCost = document.getElementById('food-cost').value;
     const rentCost = document.getElementById('rent-cost').value;
     const clothCost = document.getElementById('cloth-cost').value;
 
+    // Total Expenses
     const totalAmount = parseFloat(foodCost) + parseFloat(rentCost) + parseFloat(clothCost);
     const totalExpense = document.getElementById('total-expense');
     totalExpense.innerText = totalAmount;
 
+    // Total Balance
+    const totalBalance = incomeAmount - totalAmount;
+    balance.innerText = totalBalance;
+
+    //saving
+    const savingInput = parseFloat(document.getElementById('saving-input').value);
+    const savingAmount = document.getElementById('saving-amount');
+    savingAmount.innerText = parseFloat(incomeAmount * savingInput) / 100;
+
+
+    // remaining balance
+
+    const remainingBalance = document.getElementById('remaining-balance');
+    remainingBalance.innerText = parseFloat(balance.innerText) - savingAmount.innerText;
+
+
+
+
+    // calculateExpense();
+
+}
+/* function calculateExpense(percent) {
+    const foodCost = document.getElementById('food-cost').value;
+    const rentCost = document.getElementById('rent-cost').value;
+    const clothCost = document.getElementById('cloth-cost').value;
 
     const incomeInput = document.getElementById('income-input');
     const incomeAmount = parseFloat(incomeInput.value)
+
+    const totalAmount = parseFloat(foodCost) + parseFloat(rentCost) + parseFloat(clothCost);
+    const totalExpense = document.getElementById('total-expense');
+    totalExpense.innerText = totalAmount;
 
     const balance = document.getElementById('balance');
     const totalBalance = incomeAmount - totalAmount;
@@ -38,23 +60,23 @@ function calculateExpense() {
 
     //saving
 
+    const savingInput = document.getElementById('saving-input');
+    const savingAmount = parseFloat(savingInput.value);
+    const save = incomeAmount / savingAmount;
+    savingAmount.innerText = save;
 
-    /* const savingInput = document.getElementById('saving-input');
-    const saveInputPercent = parseFloat(savingInput.value);
-    // console.log(saveInputAmount);
-    const save = incomeAmount / parseFloat(persent);
-    const savingAmount = document.getElementById('saving-amount');
-    savingAmount.innerText = save
- */
+
 }
-
+ */
 
 document.getElementById('calculate-btn').addEventListener('click', function () {
     monthlyExpense(1000);
 })
 document.getElementById('saving-btn').addEventListener('click', function () {
-    monthlyExpense(10);
+    monthlyExpense(20);
 })
+
+
 
 /* const calculateBtn = document.getElementById('calculate-btn');
 calculateBtn.addEventListener('click', function () {
@@ -105,8 +127,9 @@ savingBtn.addEventListener('click', function () {
 
     //remaining balance
 
-    const remainingBalance = document.getElementById('remaining-balance');
-    remainingBalance.innerText = incomeAmount - parseFloat(totalSaving);
+
+    // const remainingBalance = document.getElementById('remaining-balance');
+    // remainingBalance.innerText = balanceAmount - parseFloat(totalSaving);
 
     //clear input field
     savingInput.value = '';
