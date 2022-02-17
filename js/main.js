@@ -1,45 +1,131 @@
 function monthlyExpense() {
     const incomeInput = document.getElementById('income-input');
     const incomeAmount = parseFloat(incomeInput.value)
-    console.log(incomeAmount)
-    const errorMessage = document.getElementById('error-message');
-    if (isNaN(incomeAmount) || incomeAmount <= 0) {
-        errorMessage.style.display = 'block';
-    } else {
-        errorMessage.style.display = 'none';
-    }
 
-    const balance = document.getElementById('balance');
-    balance.innerText = incomeAmount;
+    //pore kora
+    if (incomeAmount > 0) {
+        const balance = document.getElementById('balance');
+        balance.innerText = incomeAmount;
+    }
+    // const balance = document.getElementById('balance');
+    // balance.innerText = incomeAmount;
+
+
 
     const foodCost = document.getElementById('food-cost').value;
     const rentCost = document.getElementById('rent-cost').value;
     const clothCost = document.getElementById('cloth-cost').value;
 
+
+
+
+
+    //pore kora
     // Total Expenses
-    const totalAmount = parseFloat(foodCost) + parseFloat(rentCost) + parseFloat(clothCost);
-    const totalExpense = document.getElementById('total-expense');
-    totalExpense.innerText = totalAmount;
+    if (foodCost > 0 && rentCost > 0 && clothCost > 0) {
+        const totalAmount = parseFloat(foodCost) + parseFloat(rentCost) + parseFloat(clothCost);
+        const totalExpense = document.getElementById('total-expense');
+        totalExpense.innerText = totalAmount;
+
+        const totalBalance = incomeAmount - totalAmount;
+        balance.innerText = totalBalance;
+    }
+
+    // pore kora input error handling
+    const errorMessage = document.getElementById('error-message');
+    if (isNaN(incomeAmount) || incomeAmount < 0) {
+        errorMessage.style.display = 'block';
+    } else if (isNaN(foodCost) || foodCost < 0) {
+        errorMessage.style.display = 'block';
+    } else if (isNaN(rentCost) || rentCost < 0) {
+        errorMessage.style.display = 'block';
+    } else if (isNaN(clothCost) || clothCost < 0) {
+        errorMessage.style.display = 'block';
+    } else {
+        errorMessage.style.display = 'none';
+    }
+
+
+
+
 
     // Total Balance
-    const totalBalance = incomeAmount - totalAmount;
-    balance.innerText = totalBalance;
+    /* const totalBalance = incomeAmount - totalAmount;
+    balance.innerText = totalBalance; */
 
     //saving
     const savingInput = parseFloat(document.getElementById('saving-input').value);
-    const savingAmount = document.getElementById('saving-amount');
-    savingAmount.innerText = parseFloat(incomeAmount * savingInput) / 100;
+    if (savingInput > 0) {
+        const savingAmount = document.getElementById('saving-amount');
+        savingAmount.innerText = parseFloat(incomeAmount * savingInput) / 100;
+
+        const remainingBalance = document.getElementById('remaining-balance');
+        remainingBalance.innerText = parseFloat(balance.innerText) - savingAmount.innerText;
+
+    }
+    /* const savingAmount = document.getElementById('saving-amount');
+    savingAmount.innerText = parseFloat(incomeAmount * savingInput) / 100; */
+
 
 
     // remaining balance
+    /* const remainingBalance = document.getElementById('remaining-balance');
+    remainingBalance.innerText = parseFloat(balance.innerText) - savingAmount.innerText; */
 
-    const remainingBalance = document.getElementById('remaining-balance');
-    remainingBalance.innerText = parseFloat(balance.innerText) - savingAmount.innerText;
+    // income and expense input validation
+    /* const errorMessage = document.getElementById('error-message');
+    if (isNaN(incomeAmount) || incomeAmount <= 0) {
+        errorMessage.style.display = 'block';
+        totalExpense.innerText = 'No data';
+        balance.innerText = 'No data';
+    } else if (isNaN(foodCost) || foodCost < 0) {
+        errorMessage.style.display = 'block';
+        totalExpense.innerText = 'No data';
+        balance.innerText = 'No data';
+    } else if (isNaN(rentCost) || rentCost < 0) {
+        errorMessage.style.display = 'block';
+        totalExpense.innerText = 'No data';
+        balance.innerText = 'No data';
+    } else if (isNaN(clothCost) || clothCost < 0) {
+        errorMessage.style.display = 'block';
+        totalExpense.innerText = 'No data';
+        balance.innerText = 'No data';
+    } else {
+        errorMessage.style.display = 'none';
+    }
+ */
+    // if expense greater than income validation
+    const totalAmount = parseFloat(foodCost) + parseFloat(rentCost) + parseFloat(clothCost);
+    const balanceLosing = document.getElementById('balance-losing');
+    if (totalAmount > incomeAmount) {
+        balanceLosing.style.display = 'block'
+    } else {
+        balanceLosing.style.display = 'none'
+    }
+
+
+    // saving valitaion
+    /*  if (isNaN(savingInput)) {
+         savingAmount.innerText = 'No dada'
+         remainingBalance.innerText = 'No data'
+     } else {
+         savingAmount.innerText = parseFloat(incomeAmount * savingInput) / 100;
+         remainingBalance.innerText = parseFloat(balance.innerText) - savingAmount.innerText;
+ 
+     } */
+
+    //insufficient balance valitation
+    const savingAmount = document.getElementById('saving-amount').innerText;
+    const totalBalance = incomeAmount - totalAmount;
+    const insufficient = document.getElementById('insufficient');
+    if (savingAmount > totalBalance) {
+        insufficient.style.display = 'block'
+    } else {
+        insufficient.style.display = 'none'
+    }
 
 
 
-
-    // calculateExpense();
 
 }
 /* function calculateExpense(percent) {
@@ -70,10 +156,10 @@ function monthlyExpense() {
  */
 
 document.getElementById('calculate-btn').addEventListener('click', function () {
-    monthlyExpense(1000);
+    monthlyExpense();
 })
 document.getElementById('saving-btn').addEventListener('click', function () {
-    monthlyExpense(20);
+    monthlyExpense();
 })
 
 

@@ -7,20 +7,26 @@ body{
 h1{
     color: mediumslateblue;
 }
+
+/* input label  */
 label{
     width: 100px;
 }
+
+/* error message  */
 .error{
     display: none;
 }
 .exp-alert{
     display: none;
 }
+.losing{
+    display: none;
+}
+
+/* saving section css  */
 .saving{
-    width: 300px;
+    width: 300px; 
     margin: auto;
 }
 
-.btn{
-    /* font-weight: bold !important; */
-}
